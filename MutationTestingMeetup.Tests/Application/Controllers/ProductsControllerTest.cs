@@ -1,0 +1,125 @@
+﻿using System;
+using System.Net;
+using System.Threading.Tasks;
+using FluentAssertions;
+using MutationTestingMeetup.Domain;
+using MutationTestingMeetup.Tests.Asserters;
+using NUnit.Framework;
+
+namespace MutationTestingMeetup.Tests.Application.Controllers
+{
+    public class ProductsControllerTest
+    {
+        [Test]
+        public async Task GivenProductDoesNotExist_WhenGetProduct_thenReturnsNotFoundResponse()
+        {
+            using var scope = new InMemoryTestServerScope();
+
+            var response = await scope.Client.GetAsync($"/products/{Guid.NewGuid()}");
+
+            await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.NotFound);
+        }
+
+        [Test]
+        public async Task GivenProductExists_WhenGetProduct_thenReturnsProduct()
+        {
+            //Arrange
+            using var scope = new InMemoryTestServerScope();
+
+            var product = new Product("Logitech HD Pro Webcam", ProductCategory.Electronic, 200, false);
+            await scope.AddProductsToDbContext(product);
+
+            //Act
+            var response = await scope.Client.GetAsync($"/products/{product.Id}");
+
+            //Assert
+            await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.OK);
+            await HttpResponseMessageAsserter.AssertThat(response).HasJsonInBody(new
+            {
+                id = product.Id,
+                name = "Logitech HD Pro Webcam",
+                category = ProductCategory.Electronic,
+                price = 200,
+                isOnSale = false
+            });
+        }
+
+        [Test]
+        public async Task WhenGetProductsWithoutSpecifyingCategory_thenReturnsBadRequest400()
+        {
+            using var scope = new InMemoryTestServerScope();
+
+            var response = await scope.Client.GetAsync("/products");
+
+            await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.BadRequest);
+        }
+
+        [Test]
+        public async Task GivenNoProducts_whenGetProductsWithCategoryElectornic_thenReturnsNoProducts()
+        {
+            using var scope = new InMemoryTestServerScope();
+
+            var response = await scope.Client.GetAsync("/products?category=Electronic");
+
+            await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.OK);
+            await HttpResponseMessageAsserter.AssertThat(response).HasEmptyJsonArrayInBody();
+        }
+
+        [Test]
+        public async Task GivenSingleProduct_whenGetProductsWithSpecificQueryParams_thenReturnsSingleElectronicsProduct()
+        {
+            //Arrange
+            using var scope = new InMemoryTestServerScope();
+
+            var product = new Product("Logitech HD Pro Webcam", ProductCategory.Electronic, 300, true);
+            await scope.AddProductsToDbContext(product);
+
+            //Act
+            var response = await scope.Client.GetAsync("/products?category=Electronic&maxPrice=400&isOnSale=true");
+
+            //Assert
+            await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.OK);
+            await HttpResponseMessageAsserter.AssertThat(response).HasJsonArrayInBody(new[]
+            {
+                new
+                {
+                    id = product.Id,
+                    name = "Logitech HD Pro Webcam",
+                    category = ProductCategory.Electronic,
+                    price = 300,
+                    isOnSale = true
+                }
+            });
+        }
+
+        [Test]
+        public async Task GivenNoProduct_whenProductIsCreated_thenProductHasBeenCreated()
+        {
+            //Arrange
+            using var scope = new InMemoryTestServerScope();
+
+            var newProduct = new
+            {
+                name = "DEWALT Screwdriver Bit Set",
+                category = ProductCategory.Tool,
+                price = 700,
+                isOnSasle = false
+            };
+
+            //Act
+            var response = await scope.Client.PostAsync("/products", JsonPayloadBuilder.Build(newProduct));
+
+            //Assert
+            await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.Created);
+
+            scope.WebShopDbContext.Products.Should().SatisfyRespectively(
+                p =>
+                {
+                    p.Name.Should().Be("DEWALT Screwdriver Bit Set");
+                    p.Category.Should().Be(ProductCategory.Tool);
+                    p.Price.Should().Be(700);
+                    p.IsOnSale.Should().BeFalse();
+                });
+        }
+    }
+}

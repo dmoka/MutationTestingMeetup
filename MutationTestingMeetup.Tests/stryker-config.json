@@ -1,0 +1,14 @@
+{
+    "stryker-config":
+    {
+        "reporters": [
+            "progress",
+            "html"
+        ],
+		"solution-path" : "..\\MutationTestingMeetup.sln",
+        "mutate": [
+            "!Startup.cs",
+            "!DbContextConfigurator.cs",
+        ],
+    }
+}

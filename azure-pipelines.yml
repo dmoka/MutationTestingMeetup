@@ -1,0 +1,50 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: DotNetCoreCLI@2
+  displayName: Build project
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: Run unit tests
+  inputs:
+    command: 'test'
+    projects: '**/*[Tt]ests/*.csproj'
+
+- task: CmdLine@2
+  displayName: Install stryker
+  inputs:
+    script: 'dotnet tool install --global dotnet-stryker --version 0.22.4'
+
+- task: PowerShell@2
+  displayName: Run mutation tests
+  inputs:
+    targetType: 'inline'
+    script: 'dotnet stryker --solution-path "..\\MutationTestingMeetup.sln"'
+    workingDirectory: './MutationTestingMeetup.Tests'
+
+- task: PublishMutationReport@0
+  inputs:
+    reportPattern: '**/mutation-report.html'
