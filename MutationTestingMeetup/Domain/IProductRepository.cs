@@ -10,5 +10,6 @@ namespace MutationTestingMeetup.Domain
 
         Task<List<Product>> GetAllAsync(ProductCategory category);
         Product Create(Product product);
+        bool Exists(string name);
     }
 }

@@ -6,6 +6,7 @@ using MutationTestingMeetup.Domain;
 using MutationTestingMeetup.Tests.Asserters;
 using NUnit.Framework;
 
+//TODO: rename test with should when
 namespace MutationTestingMeetup.Tests.Application.Controllers
 {
     public class ProductsControllerTest
@@ -120,6 +121,32 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
                     p.Price.Should().Be(700);
                     p.IsOnSale.Should().BeFalse();
                 });
+        }
+
+        [Test]
+        public async Task ShouldReturnConflict_whenProductWithNameAlreadyExists()
+        {
+            //Arrange
+            using var scope = new InMemoryTestServerScope();
+
+            var productName = "Logitech HD Pro Webcam";
+
+            var product = new Product(productName, ProductCategory.Electronic, 200, false);
+            await scope.AddProductsToDbContext(product);
+
+            var newProduct = new
+            {
+                name = productName,
+                category = ProductCategory.Tool,
+                price = 700,
+                isOnSasle = false
+            };
+
+            //Act
+            var response = await scope.Client.PostAsync("/products", JsonPayloadBuilder.Build(newProduct));
+
+            //Assert
+            await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.Conflict);
         }
     }
 }

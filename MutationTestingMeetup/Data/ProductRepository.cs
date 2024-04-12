@@ -36,5 +36,10 @@ namespace MutationTestingMeetup.Data
 
             return entry.Entity;
         }
+
+        public bool Exists(string name)
+        {
+            return _entities.Any(p => p.Name == name);
+        }
     }
 }

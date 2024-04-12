@@ -50,6 +50,12 @@ namespace MutationTestingMeetup.Application.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] CreateProductPayload productPayload)
         {
+
+            if (_unitOfWork.Products.Exists(productPayload.Name))
+            {
+                return StatusCode(409);
+            }
+
             var product = _unitOfWork.Products.Create(
                 new Product(productPayload.Name, productPayload.Category, productPayload.Price, productPayload.IsOnSale));
 
