@@ -6,14 +6,13 @@ using MutationTestingMeetup.Domain;
 using MutationTestingMeetup.Tests.Asserters;
 using NUnit.Framework;
 
-//TODO: rename test with should when
 //TODO: consider hide lastpicked and domain events with using a view model or so
 namespace MutationTestingMeetup.Tests.Application.Controllers
 {
     public class ProductsControllerTest
     {
         [Test]
-        public async Task GivenProductDoesNotExist_WhenGetProduct_thenReturnsNotFoundResponse()
+        public async Task GetProductShouldReturnNotFound_whenNoProductExist()
         {
             using var scope = new InMemoryTestServerScope();
 
@@ -23,7 +22,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
         }
 
         [Test]
-        public async Task GivenProductExists_WhenGetProduct_thenReturnsProduct()
+        public async Task GetProductShouldProduct_whenProductExist()
         {
             //Arrange
             using var scope = new InMemoryTestServerScope();
@@ -49,7 +48,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
         }
 
         [Test]
-        public async Task WhenGetProductsWithoutSpecifyingCategory_thenReturnsBadRequest400()
+        public async Task GetAllShouldReturnBadRequest_whenNoCategorySpecified()
         {
             using var scope = new InMemoryTestServerScope();
 
@@ -59,7 +58,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
         }
 
         [Test]
-        public async Task GivenNoProducts_whenGetProductsWithCategoryElectornic_thenReturnsNoProducts()
+        public async Task GetAllShouldReturnNoProduct_whenNothingFoundInCategory()
         {
             using var scope = new InMemoryTestServerScope();
 
@@ -70,7 +69,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
         }
 
         [Test]
-        public async Task GivenSingleProduct_whenGetProductsWithSpecificQueryParams_thenReturnsSingleElectronicsProduct()
+        public async Task GetAllShouldReturnProduct_whenSingleFoundInCategory()
         {
             //Arrange
             using var scope = new InMemoryTestServerScope();
@@ -99,7 +98,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
         }
 
         [Test]
-        public async Task GivenNoProduct_whenProductIsCreated_thenProductHasBeenCreated()
+        public async Task ProductShouldBeCreated_whenNoProductExistsWithName()
         {
             //Arrange
             using var scope = new InMemoryTestServerScope();
