@@ -26,7 +26,7 @@ namespace MutationTestingMeetup.Data
                 .HasColumnType(PriceColumnType)
                 .IsRequired();
 
-            builder.Property(p => p.IsOnSale)
+            builder.Property(p => p.SaleState)
                 .IsRequired();
         }
     }

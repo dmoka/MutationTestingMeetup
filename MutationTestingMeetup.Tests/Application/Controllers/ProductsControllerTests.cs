@@ -31,7 +31,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             //Arrange
             using var scope = new InMemoryTestServerScope();
 
-            var product = new Product("Logitech HD Pro Webcam", ProductCategory.Electronic, 200, false);
+            var product = new Product("Logitech HD Pro Webcam", ProductCategory.Electronic, 200, SaleState.NoSale);
             await scope.AddProductsToDbContext(product);
 
             //Act
@@ -45,7 +45,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
                 name = "Logitech HD Pro Webcam",
                 category = ProductCategory.Electronic,
                 price = 200,
-                isOnSale = false,
+                saleState = SaleState.NoSale,
                 lastPickState = (int)PickState.New,
                 domainEvents = Array.Empty<object>()
         });
@@ -78,11 +78,11 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             //Arrange
             using var scope = new InMemoryTestServerScope();
 
-            var product = new Product("Logitech HD Pro Webcam", ProductCategory.Electronic, 300, true);
+            var product = new Product("Logitech HD Pro Webcam", ProductCategory.Electronic, 300, SaleState.OnSale);
             await scope.AddProductsToDbContext(product);
 
             //Act
-            var response = await scope.Client.GetAsync("/products?category=Electronic&maxPrice=400&isOnSale=true");
+            var response = await scope.Client.GetAsync("/products?category=Electronic&maxPrice=400&saleState=OnSale");
 
             //Assert
             await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.OK);
@@ -94,7 +94,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
                     name = "Logitech HD Pro Webcam",
                     category = ProductCategory.Electronic,
                     price = 300,
-                    isOnSale = true,
+                    saleState = SaleState.OnSale,
                     lastPickState = (int)PickState.New,
                     domainEvents = Array.Empty<object>()
                 }
@@ -113,7 +113,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
                 name = "DEWALT Screwdriver Bit Set",
                 category = ProductCategory.Tool,
                 price = 700,
-                isOnSasle = false
+                saleState = SaleState.NoSale
             };
 
             //Act
@@ -128,7 +128,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
                     p.Name.Should().Be("DEWALT Screwdriver Bit Set");
                     p.Category.Should().Be(ProductCategory.Tool);
                     p.Price.Should().Be(700);
-                    p.IsOnSale.Should().BeFalse();
+                    p.SaleState.Should().Be(SaleState.NoSale);
                 });
 
             var stockLevel = scope.WebShopDbContext.StockLevels.Single();
@@ -143,7 +143,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
 
             var productName = "Logitech HD Pro Webcam";
 
-            var product = new Product(productName, ProductCategory.Electronic, 200, false);
+            var product = new Product(productName, ProductCategory.Electronic, 200, SaleState.NoSale);
             await scope.AddProductsToDbContext(product);
 
             var newProduct = new
@@ -167,7 +167,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             //Arrange
             using var scope = new InMemoryTestServerScope();
 
-            var product = new Product("Logitech HD Pro Webcam", ProductCategory.Electronic, 200, false);
+            var product = new Product("Logitech HD Pro Webcam", ProductCategory.Electronic, 200, SaleState.NoSale);
             await scope.AddProductsToDbContext(product);
 
             //Act
@@ -185,7 +185,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             //Arrange
             using var scope = new InMemoryTestServerScope();
 
-            var product = new Product("Logitech HD Pro Webcam", ProductCategory.Electronic, 200, false);
+            var product = new Product("Logitech HD Pro Webcam", ProductCategory.Electronic, 200, SaleState.NoSale);
             await scope.AddProductsToDbContext(product);
 
             //Act

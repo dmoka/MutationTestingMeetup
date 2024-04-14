@@ -7,16 +7,17 @@ namespace MutationTestingMeetup.Domain
         public string Name { get; }
         public ProductCategory Category { get; }
         public decimal Price { get; }
-        public bool IsOnSale { get; }
+        public SaleState SaleState { get; }
         public PickState LastPickState { get; private set; }
 
-        public Product(string name, ProductCategory category, decimal price, bool isOnSale)
+        public Product(string name, ProductCategory category, decimal price, SaleState saleState)
         {
             Id = Guid.NewGuid();
             Category = category;
             Price = price;
-            IsOnSale = isOnSale;
+            SaleState = saleState;
             Name = name;
+            SaleState = saleState;
             LastPickState = PickState.New;
 
             RaiseDomainEvent(new ProductCreatedEvent(Id));
@@ -35,5 +36,11 @@ namespace MutationTestingMeetup.Domain
     {
         New,
         Picked,
+    }
+
+    public enum SaleState
+    {
+        NoSale,
+        OnSale,
     }
 }

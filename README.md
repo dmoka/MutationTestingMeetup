@@ -25,3 +25,4 @@
 - "The product category must be specified" missiing - HasTextInBody
 - ProductPicked edge case
 - Again the exception message is not passed
+- orderby in product finder -> add multiple products 2nd with Acer, then it is ordered

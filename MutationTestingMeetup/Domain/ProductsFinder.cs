@@ -43,7 +43,7 @@ namespace MutationTestingMeetup.Domain
         {
             if (isOnSale.HasValue)
             {
-                products = products.Where(p => p.IsOnSale == isOnSale).ToList();
+                products = products.Where(p => p.SaleState == SaleState.OnSale).ToList();
             }
 
             return products;
