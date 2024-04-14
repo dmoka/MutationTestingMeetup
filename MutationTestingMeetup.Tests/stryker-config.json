@@ -1,6 +1,6 @@
 {
     "stryker-config":
-    {
+    {	
         "reporters": [
             "progress",
             "html"
@@ -11,6 +11,11 @@
             "!Startup.cs",
             "!DbContextConfigurator.cs",
             "!Program.cs"
-        ]
+        ],
+		"thresholds": {
+			"high": 90,
+			"low": 70,
+			"break": 60
+		}
     }
 }

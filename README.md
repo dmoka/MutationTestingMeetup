@@ -16,13 +16,17 @@
 
 ## DEMO MT
 -Talk about Project
-- Talk about ProductController
+- Talk about ProductController and Product about the domain
+- TODO: MAKE IMAGE?
 -Talk about Stryker
 -- Show link https://stryker-mutator.io/
+-- shot config file
+-- let's run it
 
 
 ## Mutations
 - "The product category must be specified" missiing - HasTextInBody
-- ProductPicked edge case
+- ProductPicked edge case - add new test
 - Again the exception message is not passed
 - orderby in product finder -> add multiple products 2nd with Acer, then it is ordered
+- ShouldNotReturnExistingProductWhenFilteredOut
