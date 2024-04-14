@@ -9,7 +9,7 @@ using NUnit.Framework;
 //TODO: consider hide lastpicked and domain events with using a view model or so
 namespace MutationTestingMeetup.Tests.Application.Controllers
 {
-    public class ProductsControllerTest
+    public class ProductsControllerTests
     {
         [Test]
         public async Task GetProductShouldReturnNotFound_whenNoProductExist()
