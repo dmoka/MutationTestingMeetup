@@ -9,8 +9,6 @@ using MutationTestingMeetup.Tests.Asserters;
 using NUnit.Framework;
 
 //TODO: reorganize files
-//TODO: delete last picked
-//TODO: consider hide lastpicked and domain events with using a view model or so
 namespace MutationTestingMeetup.Tests.Application.Controllers
 {
     public class ProductsControllerTests
@@ -73,7 +71,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
         }
 
         [Test]
-        public async Task GetAllShouldReturnProduct_whenSingleFoundInCategory()
+        public async Task GetAllShouldReturnSingleProduct_whenSingleFoundInCategory()
         {
             //Arrange
             using var scope = new InMemoryTestServerScope();
@@ -81,8 +79,11 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             var product = new Product("Logitech HD Pro Webcam", ProductCategory.Electronic, 300, SaleState.OnSale);
             await scope.AddProductsToDbContext(product);
 
+            var product2 = new Product("Acer Webcam", ProductCategory.Electronic, 600, SaleState.NoSale);
+            await scope.AddProductsToDbContext(product2);
+
             //Act
-            var response = await scope.Client.GetAsync("/products?category=Electronic&maxPrice=400&saleState=OnSale");
+            var response = await scope.Client.GetAsync("/products?category=Electronic&maxPrice=400&isOnSale=true");
 
             //Assert
             await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.OK);
@@ -194,5 +195,9 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             //Assert
             await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.BadRequest);
         }
+        //first run code coverage without any assertion to see if it is really ogod
+        //nice check if we can talk about all mutants what we have currently, and their fix
+        //then implement unpick with TDD
+        //wrap up
     }
 }

@@ -18,6 +18,7 @@
 -Talk about Project
 - Talk about ProductController and Product about the domain
 - TODO: MAKE IMAGE?
+- Check code coverage?
 -Talk about Stryker
 -- Show link https://stryker-mutator.io/
 -- shot config file
