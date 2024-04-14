@@ -7,7 +7,7 @@ namespace MutationTestingMeetup.Data
     {
         private readonly WebShopDbContext _dbContext;
         private IProductRepository _products;
-        private IInventoryLevelRepository _inventories;
+        private IStockLevelRepository _stocks;
 
         public UnitOfWork(WebShopDbContext dbContext)
         {
@@ -15,7 +15,7 @@ namespace MutationTestingMeetup.Data
         }
 
         public IProductRepository Products => _products ??= new ProductRepository(_dbContext);
-        public IInventoryLevelRepository Inventories => _inventories ??= new InventoryLevelRepository(_dbContext);
+        public IStockLevelRepository Stocks => _stocks ??= new StockLevelRepository(_dbContext);
 
 
 

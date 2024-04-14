@@ -5,7 +5,7 @@ namespace MutationTestingMeetup.Domain
     public interface IUnitOfWork
     {
         IProductRepository Products { get; }
-        IInventoryLevelRepository Inventories { get; }
+        IStockLevelRepository Stocks { get; }
 
         Task CommitAsync();
     }

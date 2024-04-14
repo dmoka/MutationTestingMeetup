@@ -13,7 +13,7 @@ namespace MutationTestingMeetup.Data
 
         public DbSet<Product> Products { get; set; }
 
-        public DbSet<InventoryLevel> InventoryLevels { get; set; }
+        public DbSet<StockLevel> InventoryLevels { get; set; }
 
 
 

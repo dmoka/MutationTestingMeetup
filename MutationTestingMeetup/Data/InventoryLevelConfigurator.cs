@@ -5,11 +5,11 @@ using MutationTestingMeetup.Domain;
 
 namespace MutationTestingMeetup.Data
 {
-    public class InventoryLevelConfigurator : EntityConfigurationBase<InventoryLevel>
+    public class InventoryLevelConfigurator : EntityConfigurationBase<StockLevel>
     {
 
 
-        public override void Configure(EntityTypeBuilder<InventoryLevel> builder)
+        public override void Configure(EntityTypeBuilder<StockLevel> builder)
         {
             builder.HasKey(s => s.Id);
 

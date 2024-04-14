@@ -7,26 +7,26 @@ using MutationTestingMeetup.Domain;
 
 namespace MutationTestingMeetup.Data
 {
-    public class InventoryLevelRepository : IInventoryLevelRepository
+    public class StockLevelRepository : IStockLevelRepository
     {
         private readonly WebShopDbContext _dbContext;
-        private readonly DbSet<InventoryLevel> _entities;
+        private readonly DbSet<StockLevel> _entities;
 
-        public InventoryLevelRepository(WebShopDbContext dbContext)
+        public StockLevelRepository(WebShopDbContext dbContext)
         {
             if (dbContext == null) throw new ArgumentNullException(nameof(dbContext));
 
             _dbContext = dbContext;
-            _entities = dbContext.Set<InventoryLevel>();
+            _entities = dbContext.Set<StockLevel>();
         }
 
-        public Task<InventoryLevel> GetAsync(Guid id)
+        public Task<StockLevel> GetAsync(Guid id)
         {
             return _entities.SingleOrDefaultAsync(p => p.Id == id);
         }
 
 
-        public InventoryLevel Create(InventoryLevel entity)
+        public StockLevel Create(StockLevel entity)
         {
             var entry = _entities.Add(entity);
 
