@@ -11,3 +11,4 @@
 ## Mutations
 - "The product category must be specified" missiing - HasTextInBody
 - ProductPicked edge case
+- Again the exception message is not passed

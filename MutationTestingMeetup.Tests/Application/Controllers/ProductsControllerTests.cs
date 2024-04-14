@@ -176,7 +176,22 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.Accepted);
             var stockLevel = scope.WebShopDbContext.StockLevels.Single();
             stockLevel.Count.Should().Be(8);
+        }
 
+        [Test]
+        public async Task PickProductShouldReturnError_whenPickedCountIsBiggerThanStockLevel()
+        {
+            //Arrange
+            using var scope = new InMemoryTestServerScope();
+
+            var product = new Product("Logitech HD Pro Webcam", ProductCategory.Electronic, 200, false);
+            await scope.AddProductsToDbContext(product);
+
+            //Act
+            var response = await scope.Client.PostAsync($"/products/{product.Id}/pick", JsonPayloadBuilder.Build(new PickPayload { Count = 11 }));
+
+            //Assert
+            await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.BadRequest);
         }
     }
 }

@@ -72,10 +72,17 @@ namespace MutationTestingMeetup.Application.Controllers
         [Route("{id}/pick")]
         public async Task<IActionResult> PickProduct(Guid id, PickPayload payload)
         {
+            try
+            {
+                var product = await _unitOfWork.Products.GetAsync(id);
+                product.Pick(payload.Count);
+                await _unitOfWork.CommitAsync();
+            }
+            catch (ApplicationException e)
+            {
+                return BadRequest(e.Message);
+            }
 
-            var product = await _unitOfWork.Products.GetAsync(id);
-            product.Pick(payload.Count);
-            await _unitOfWork.CommitAsync();
 
             return Accepted((object)null);
         }
