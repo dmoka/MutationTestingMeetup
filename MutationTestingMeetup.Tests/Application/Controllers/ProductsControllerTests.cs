@@ -132,8 +132,11 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
                     p.SaleState.Should().Be(SaleState.NoSale);
                 });
 
+            var product = scope.WebShopDbContext.Products.Single();
             var stockLevel = scope.WebShopDbContext.StockLevels.Single();
             stockLevel.Should().NotBeNull();
+            stockLevel.ProductId.Should().Be(product.Id);
+            stockLevel.Count.Should().Be(10);
         }
 
         [Test]
