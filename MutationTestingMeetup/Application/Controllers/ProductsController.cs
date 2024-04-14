@@ -59,7 +59,6 @@ namespace MutationTestingMeetup.Application.Controllers
             var product = new Product(productPayload.Name, productPayload.Category, productPayload.Price,
                 productPayload.IsOnSale);
 
-
             var storedProduct = _unitOfWork.Products.Create(product);
 
             await _unitOfWork.CommitAsync();
