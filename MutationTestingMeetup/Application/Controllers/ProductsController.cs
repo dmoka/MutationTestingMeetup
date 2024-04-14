@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MutationTestingMeetup.Domain;
@@ -56,8 +57,9 @@ namespace MutationTestingMeetup.Application.Controllers
                 return StatusCode(409);
             }
 
+            var saleState = productPayload.IsOnSale ? SaleState.OnSale : SaleState.NoSale;
             var product = new Product(productPayload.Name, productPayload.Category, productPayload.Price,
-                SaleState.NoSale);
+                saleState);
 
             var storedProduct = _unitOfWork.Products.Create(product);
 
