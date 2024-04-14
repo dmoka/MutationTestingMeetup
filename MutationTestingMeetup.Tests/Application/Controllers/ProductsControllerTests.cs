@@ -8,7 +8,8 @@ using MutationTestingMeetup.Domain;
 using MutationTestingMeetup.Tests.Asserters;
 using NUnit.Framework;
 
-//TODO: reorganize stuff
+//TODO: reorganize files
+//TODO: delete last picked
 //TODO: consider hide lastpicked and domain events with using a view model or so
 namespace MutationTestingMeetup.Tests.Application.Controllers
 {

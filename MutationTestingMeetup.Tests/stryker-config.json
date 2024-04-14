@@ -10,7 +10,7 @@
         "mutate": [
             "!Startup.cs",
             "!DbContextConfigurator.cs",
-            "!Program"
+            "!Program.cs"
         ]
     }
 }
