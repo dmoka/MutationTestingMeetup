@@ -26,7 +26,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
         }
 
         [Test]
-        public async Task GetProductShouldProduct_whenProductExist()
+        public async Task GetProductShouldReturnProduct_whenProductExist()
         {
             //Arrange
             using var scope = new InMemoryTestServerScope();
@@ -46,13 +46,13 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
                 category = ProductCategory.Electronic,
                 price = 200,
                 isOnSale = false,
-                lastPickedOn = (object)null, //TODO: consider hide these?! check other tests
+                lastPickState = (int)PickState.New,
                 domainEvents = Array.Empty<object>()
         });
         }
 
         [Test]
-        public async Task GetAllShouldReturnBadRequest_whenNoCategorySpecified()
+        public async Task GetAllProductShouldReturnBadRequest_whenNoCategorySpecified()
         {
             using var scope = new InMemoryTestServerScope();
 
@@ -95,11 +95,12 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
                     category = ProductCategory.Electronic,
                     price = 300,
                     isOnSale = true,
-                    lastPickedOn = (object)null,
+                    lastPickState = (int)PickState.New,
                     domainEvents = Array.Empty<object>()
                 }
             });
         }
+
 
         [Test]
         public async Task ProductShouldBeCreated_whenNoProductExistsWithName()
