@@ -5,10 +5,11 @@
             "progress",
             "html"
         ],
-		"solution-path" : "..\\MutationTestingMeetup.sln",
+        "solution": "C:/dev/MutationTestingMeetup/MutationTestingMeetup.sln",
+		"project" : "C:/dev/MutationTestingMeetup/MutationTestingMeetup/MutationTestingMeetup.csproj",
         "mutate": [
             "!Startup.cs",
-            "!DbContextConfigurator.cs",
-        ],
+            "!DbContextConfigurator.cs"
+        ]
     }
 }
