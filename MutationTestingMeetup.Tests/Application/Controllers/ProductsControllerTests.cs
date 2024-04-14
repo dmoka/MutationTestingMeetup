@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
+using MutationTestingMeetup.Application.Controllers;
 using MutationTestingMeetup.Domain;
 using MutationTestingMeetup.Tests.Asserters;
 using NUnit.Framework;
 
+//TODO: reorganize stuff
 //TODO: consider hide lastpicked and domain events with using a view model or so
 namespace MutationTestingMeetup.Tests.Application.Controllers
 {
@@ -125,6 +128,9 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
                     p.Price.Should().Be(700);
                     p.IsOnSale.Should().BeFalse();
                 });
+
+            var stockLevel = scope.WebShopDbContext.StockLevels.Single();
+            stockLevel.Should().NotBeNull();
         }
 
         [Test]
@@ -151,6 +157,25 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
 
             //Assert
             await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.Conflict);
+        }
+
+        [Test]
+        public async Task PickProductShouldChangeStockLevel()
+        {
+            //Arrange
+            using var scope = new InMemoryTestServerScope();
+
+            var product = new Product("Logitech HD Pro Webcam", ProductCategory.Electronic, 200, false);
+            await scope.AddProductsToDbContext(product);
+
+            //Act
+            var response = await scope.Client.PostAsync($"/products/{product.Id}/pick", JsonPayloadBuilder.Build(new PickPayload {Count = 2}));
+
+            //Assert
+            await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.Accepted);
+            var stockLevel = scope.WebShopDbContext.StockLevels.Single();
+            stockLevel.Count.Should().Be(8);
+
         }
     }
 }

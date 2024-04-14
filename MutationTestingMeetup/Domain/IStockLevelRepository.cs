@@ -6,7 +6,7 @@ namespace MutationTestingMeetup.Domain
 {
     public interface IStockLevelRepository
     {
-        Task<StockLevel> GetAsync(Guid id);
+        Task<StockLevel> GetAsync(Guid productId);
 
         StockLevel Create(StockLevel level);
     }

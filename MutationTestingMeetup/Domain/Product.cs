@@ -23,11 +23,11 @@ namespace MutationTestingMeetup.Domain
 
         }
 
-        public void PickProduct()
+        public void Pick(int count)
         {
             LastPickedOn = DateTime.Now;
 
-            RaiseDomainEvent(new ProductPickedEvent(this));
+            RaiseDomainEvent(new ProductPickedEvent(Id, count));
         }
     }
 }

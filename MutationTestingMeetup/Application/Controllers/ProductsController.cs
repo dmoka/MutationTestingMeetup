@@ -67,5 +67,17 @@ namespace MutationTestingMeetup.Application.Controllers
             return CreatedAtAction("GetProduct", new { id = storedProduct.Id }, storedProduct);
         }
 
+
+        [HttpPost]
+        [Route("{id}/pick")]
+        public async Task<IActionResult> PickProduct(Guid id, PickPayload payload)
+        {
+
+            var product = await _unitOfWork.Products.GetAsync(id);
+            product.Pick(payload.Count);
+            await _unitOfWork.CommitAsync();
+
+            return Accepted((object)null);
+        }
     }
 }

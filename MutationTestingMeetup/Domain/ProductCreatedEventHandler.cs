@@ -8,6 +8,7 @@ namespace MutationTestingMeetup.Domain
 {
     public class ProductCreatedEventHandler : IHandler<ProductCreatedEvent>
     {
+
         private readonly IStockLevelRepository _repository;
 
         public ProductCreatedEventHandler(IStockLevelRepository repository)
@@ -17,7 +18,7 @@ namespace MutationTestingMeetup.Domain
 
         public Task Handle(ProductCreatedEvent domainEvent)
         {
-            var inventoryLevel = new StockLevel(domainEvent.ProductId);
+            var inventoryLevel = new StockLevel(domainEvent.ProductId, 10);
 
             _repository.Create(inventoryLevel);
             return Task.CompletedTask;

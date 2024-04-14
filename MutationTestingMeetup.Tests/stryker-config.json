@@ -9,7 +9,8 @@
 		"project" : "C:/dev/MutationTestingMeetup/MutationTestingMeetup/MutationTestingMeetup.csproj",
         "mutate": [
             "!Startup.cs",
-            "!DbContextConfigurator.cs"
+            "!DbContextConfigurator.cs",
+            "!Program"
         ]
     }
 }

@@ -7,11 +7,13 @@ namespace MutationTestingMeetup.Domain
 {
     public class ProductPickedEvent : IDomainEvent
     {
-        public Product Product { get; }
+        public Guid ProductId { get; }
+        public int Count { get; }
 
-        public ProductPickedEvent(Product product)
+        public ProductPickedEvent(Guid productId, int count)
         {
-            Product = product;
+            ProductId = productId;
+            Count = count;
         }
     }
 }

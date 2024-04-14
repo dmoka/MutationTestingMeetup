@@ -7,9 +7,25 @@ namespace MutationTestingMeetup.Domain
 {
     public class ProductPickedEventHandler : IHandler<ProductPickedEvent>
     {
-        public Task Handle(ProductPickedEvent domainEvent)
+
+        private readonly IStockLevelRepository _repository;
+
+        public ProductPickedEventHandler(IStockLevelRepository repository)
         {
-            return Task.CompletedTask;
+            _repository = repository;
         }
+
+        public async Task Handle(ProductPickedEvent domainEvent)
+        {
+            var product = await _repository.GetAsync(domainEvent.ProductId);
+
+            if (domainEvent.Count >= product.Count)
+            {
+                throw new ApplicationException("Cannot be picked more than stock level");
+            }
+
+            product.UpdateCount(domainEvent.Count);
+        }
+
     }
 }

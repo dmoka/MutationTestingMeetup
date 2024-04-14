@@ -17,7 +17,7 @@ namespace MutationTestingMeetup
                     connection.Open();
                     options.UseSqlite(connection);
                     options.EnableSensitiveDataLogging();
-                    Console.WriteLine("INFO - Using inmemory SQLite");
+                    //Console.WriteLine("INFO - Using inmemory SQLite");
                 },
                 ServiceLifetime.Singleton);
         }

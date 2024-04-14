@@ -45,7 +45,8 @@ namespace MutationTestingMeetup.Tests.Asserters
 
         public async Task<HttpResponseMessageAsserter> HasJsonInBody(string expectedJson)
         {
-            JsonAsserter.AssertThat(await Actual.Content.ReadAsStringAsync())
+            var content = await Actual.Content.ReadAsStringAsync();
+            JsonAsserter.AssertThat(content)
                 .IsEqualTo(expectedJson);
 
             return this;

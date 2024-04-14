@@ -40,6 +40,13 @@ namespace MutationTestingMeetup.Tests
             await WebShopDbContext.SaveChangesAsync();
         }
 
+        public async Task AddStockLevel(StockLevel stockLevel)
+        {
+            WebShopDbContext.Add(stockLevel);
+
+            await WebShopDbContext.SaveChangesAsync();
+        }
+
         private static IWebHostBuilder CreateWebHostBuilder()
         {
             return new WebHostBuilder()

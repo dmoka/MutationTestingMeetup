@@ -9,13 +9,18 @@ namespace MutationTestingMeetup.Domain
     {
         public Guid ProductId { get; }
 
-        public int Count { get; }
+        public int Count { get; private set; }
 
-        public StockLevel(Guid productId)
+        public StockLevel(Guid productId, int count)
         {
             Id = Guid.NewGuid();
             ProductId = productId;
-            Count = 0;
+            Count = count;
+        }
+
+        public void UpdateCount(int count)
+        {
+            Count -= count;
         }
 
     }

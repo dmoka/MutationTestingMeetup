@@ -28,6 +28,7 @@ namespace MutationTestingMeetup
             services.AddScoped<IStockLevelRepository, StockLevelRepository>();
             services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
             services.AddScoped<IHandler<ProductCreatedEvent>, ProductCreatedEventHandler>();
+            services.AddScoped<IHandler<ProductPickedEvent>, ProductPickedEventHandler>();
         }
 
 

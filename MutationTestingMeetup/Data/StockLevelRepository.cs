@@ -22,7 +22,7 @@ namespace MutationTestingMeetup.Data
 
         public Task<StockLevel> GetAsync(Guid id)
         {
-            return _entities.SingleOrDefaultAsync(p => p.Id == id);
+            return _entities.SingleOrDefaultAsync(p => p.ProductId == id);
         }
 
 
