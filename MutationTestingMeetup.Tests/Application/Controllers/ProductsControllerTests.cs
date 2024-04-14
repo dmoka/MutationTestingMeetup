@@ -198,7 +198,6 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             //Assert
             await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.BadRequest);
         }
-        //first run code coverage without any assertion to see if it is really ogod
         //nice check if we can talk about all mutants what we have currently, and their fix
         //then implement unpick with TDD
         //wrap up
