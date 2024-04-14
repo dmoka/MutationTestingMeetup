@@ -2,13 +2,14 @@
 
 namespace MutationTestingMeetup.Domain
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        public Guid Id { get; set; }
         public string Name { get; }
         public ProductCategory Category { get; }
         public decimal Price { get; }
         public bool IsOnSale { get; }
+
+        public DateTime? LastPickedOn { get; private set;}
 
         public Product(string name, ProductCategory category, decimal price, bool isOnSale)
         {
@@ -17,6 +18,16 @@ namespace MutationTestingMeetup.Domain
             Price = price;
             IsOnSale = isOnSale;
             Name = name;
+
+            RaiseDomainEvent(new ProductCreatedEvent(Id));
+
+        }
+
+        public void PickProduct()
+        {
+            LastPickedOn = DateTime.Now;
+
+            RaiseDomainEvent(new ProductPickedEvent(this));
         }
     }
 }

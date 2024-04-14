@@ -7,6 +7,7 @@ using MutationTestingMeetup.Tests.Asserters;
 using NUnit.Framework;
 
 //TODO: rename test with should when
+//TODO: consider hide lastpicked and domain events with using a view model or so
 namespace MutationTestingMeetup.Tests.Application.Controllers
 {
     public class ProductsControllerTest
@@ -41,8 +42,10 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
                 name = "Logitech HD Pro Webcam",
                 category = ProductCategory.Electronic,
                 price = 200,
-                isOnSale = false
-            });
+                isOnSale = false,
+                lastPickedOn = (object)null, //TODO: consider hide these?! check other tests
+                domainEvents = Array.Empty<object>()
+        });
         }
 
         [Test]
@@ -88,7 +91,9 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
                     name = "Logitech HD Pro Webcam",
                     category = ProductCategory.Electronic,
                     price = 300,
-                    isOnSale = true
+                    isOnSale = true,
+                    lastPickedOn = (object)null,
+                    domainEvents = Array.Empty<object>()
                 }
             });
         }

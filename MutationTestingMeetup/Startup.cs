@@ -25,6 +25,9 @@ namespace MutationTestingMeetup
 
             services.AddScoped<IProductsFinder, ProductsFinder>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IInventoryLevelRepository, InventoryLevelRepository>();
+            services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+            services.AddScoped<IHandler<ProductCreatedEvent>, ProductCreatedEventHandler>();
         }
 
 
