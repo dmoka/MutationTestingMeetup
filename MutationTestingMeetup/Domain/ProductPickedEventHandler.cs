@@ -17,14 +17,14 @@ namespace MutationTestingMeetup.Domain
 
         public async Task Handle(ProductPickedEvent domainEvent)
         {
-            var product = await _repository.GetAsync(domainEvent.ProductId);
+            var stockLevel = await _repository.GetAsync(domainEvent.ProductId);
 
-            if (domainEvent.Count >= product.Count)
+            if (domainEvent.Count >= stockLevel.Count)
             {
                 throw new ApplicationException("Cannot be picked more than stock level");
             }
 
-            product.UpdateCount(domainEvent.Count);
+            stockLevel.UpdateCount(domainEvent.Count);
         }
 
     }
