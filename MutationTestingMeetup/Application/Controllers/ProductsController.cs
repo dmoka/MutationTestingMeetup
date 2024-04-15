@@ -85,7 +85,7 @@ namespace MutationTestingMeetup.Application.Controllers
             }
 
 
-            return Accepted((object)null);
+            return StatusCode(204);
         }
     }
 }

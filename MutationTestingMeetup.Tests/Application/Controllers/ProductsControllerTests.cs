@@ -178,7 +178,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             var response = await scope.Client.PostAsync($"/products/{product.Id}/pick", JsonPayloadBuilder.Build(new PickPayload {Count = 2}));
 
             //Assert
-            await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.Accepted);
+            await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.NoContent);
             var stockLevel = scope.WebShopDbContext.StockLevels.Single();
             stockLevel.Count.Should().Be(8);
         }
