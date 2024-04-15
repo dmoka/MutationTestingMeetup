@@ -24,7 +24,7 @@ namespace MutationTestingMeetup.Domain
                 throw new ApplicationException("Cannot be picked more than stock level");
             }
 
-            stockLevel.UpdateCount(domainEvent.Count);
+            stockLevel.DecreaseStockLevel(domainEvent.Count);
         }
 
     }

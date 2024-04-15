@@ -18,7 +18,7 @@ namespace MutationTestingMeetup.Domain
             Count = count;
         }
 
-        public void UpdateCount(int count)
+        public void DecreaseStockLevel(int count)
         {
             Count -= count;
         }
