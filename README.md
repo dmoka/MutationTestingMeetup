@@ -1,9 +1,9 @@
 ## Unpick specification
-1. Implement an unpick POST methif with route products/{id}/unpick
+1. Implement an unpick POST HTTP method with route products/{id}/unpick
 2. When the product unpicked, change latest pick state to Unpicked
 3. When the product unpicked, increase the stock level correspondingly
-4. Return BadRequest when stock level reaches 200
-5. BadRequest should have error "Cannot unpick more at reached max stock inventory limit"
+4. Return BadRequest when stock level becomes bigger 50
+5. BadRequest should have error "Cannot unpick more because reached max stock inventory limit"
 ```dotnet stryker```
 
 
