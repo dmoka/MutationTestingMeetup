@@ -46,7 +46,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
                 saleState = SaleState.NoSale,
                 lastPickState = (int)PickState.New,
                 domainEvents = Array.Empty<object>()
-        });
+            });
         }
 
         [Test]
