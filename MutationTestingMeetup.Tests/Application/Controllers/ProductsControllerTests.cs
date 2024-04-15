@@ -166,7 +166,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
         }
 
         [Test]
-        public async Task PickProductShouldChangeStockLevel()
+        public async Task PickProductShouldDecreaseStockLevel()
         {
             //Arrange
             using var scope = new InMemoryTestServerScope();
