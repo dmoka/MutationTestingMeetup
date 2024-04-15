@@ -8,10 +8,10 @@ A warehouse management system (WMS) is a tool that helps control and organize ev
 
 
 ## Features - Product endpoint
-- creating products
-- retrieving products
-- searching for products
-- picking products
+- Creating products
+- Retrieving products
+- Searching for products
+- Picking products
 
 
 ## Unpick specification
