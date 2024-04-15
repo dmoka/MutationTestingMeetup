@@ -16,10 +16,11 @@ A warehouse management system (WMS) is a tool that helps control and organize ev
 
 ## Unpick specification
 1. Add an unpick HTTP method `POST products/{id}/unpick`
-2. When a product unpicked, the latest pick state is changed to Unpicked
-3. When a product unpicked, the stock level increases correspondingly
-4. Return BadRequest when stock level becomes bigger MaxStock Level (50)
-5. BadRequest should have error "Cannot unpick more because reached max stock inventory limit"
+2. Successfully unpick operation returns 204 No Content
+3. When a product unpicked, the latest pick state is changed to Unpicked
+4. When a product unpicked, the stock level increases correspondingly
+5. Return BadRequest when stock level becomes bigger MaxStock Level (50)
+6. BadRequest should have error "Cannot unpick more because reached max stock inventory limit"
 
 
 ## Run stryker
