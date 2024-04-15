@@ -198,8 +198,5 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             //Assert
             await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.BadRequest);
         }
-        //nice check if we can talk about all mutants what we have currently, and their fix
-        //then implement unpick with TDD
-        //wrap up
     }
 }
