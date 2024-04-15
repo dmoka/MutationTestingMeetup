@@ -71,7 +71,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
         }
 
         [Test]
-        public async Task GetAllShouldReturnSingleProduct_whenSingleFoundInCategory()
+        public async Task GetAllShouldReturnSingleProduct_whenSingleFoundInWithFilters()
         {
             //Arrange
             using var scope = new InMemoryTestServerScope();
@@ -79,7 +79,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             var product = new Product("Logitech HD Pro Webcam", ProductCategory.Electronic, 300, SaleState.OnSale);
             await scope.AddProductsToDbContext(product);
 
-            var product2 = new Product("Acer Webcam", ProductCategory.Electronic, 600, SaleState.NoSale);
+            var product2 = new Product("Acer Webcam", ProductCategory.Electronic, 600, SaleState.OnSale);
             await scope.AddProductsToDbContext(product2);
 
             //Act
