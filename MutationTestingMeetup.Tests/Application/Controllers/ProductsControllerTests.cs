@@ -71,7 +71,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
         }
 
         [Test]
-        public async Task GetAllShouldReturnSingleProduct_whenSingleFoundInWithFilters()
+        public async Task GetAllShouldReturnSingleProduct_whenSingleFoundWithFilters()
         {
             //Arrange
             using var scope = new InMemoryTestServerScope();
