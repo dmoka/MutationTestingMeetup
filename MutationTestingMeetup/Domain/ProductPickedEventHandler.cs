@@ -19,7 +19,7 @@ namespace MutationTestingMeetup.Domain
         {
             var stockLevel = await _repository.GetAsync(domainEvent.ProductId);
 
-            if (domainEvent.Count >= stockLevel.Count)
+            if (domainEvent.Count > stockLevel.Count)
             {
                 throw new ApplicationException("Cannot be picked more than stock level");
             }

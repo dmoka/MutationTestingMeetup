@@ -30,7 +30,7 @@ A warehouse management system (WMS) is a tool that helps control and organize ev
 ```dotnet stryker```
 
 # Archive
-
+"Picking" in a warehouse refers to the process of selecting and gathering items from storage locations according to specific customer orders. I
 ## Event
 -- agenda
 -- mutation testing
