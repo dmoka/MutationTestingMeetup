@@ -8,7 +8,6 @@ using MutationTestingMeetup.Domain;
 using MutationTestingMeetup.Tests.Asserters;
 using NUnit.Framework;
 
-//TODO: reorganize files
 namespace MutationTestingMeetup.Tests.Application.Controllers
 {
     public class ProductsControllerTests
