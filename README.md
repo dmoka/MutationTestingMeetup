@@ -16,7 +16,7 @@ A warehouse management system (WMS) is a tool that helps control and organize ev
 
 ## Unpick specification
 1. Add an unpick HTTP method `POST products/{id}/unpick`
-2. Successfully unpick operation returns 204 No Content
+2. Successfull unpick operation returns 204 No Content
 3. When a product unpicked, the latest pick state is changed to Unpicked
 4. When a product unpicked, the stock level increases correspondingly
 5. Return BadRequest when stock level becomes than bigger MaxStock Level (50)
