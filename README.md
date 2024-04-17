@@ -4,17 +4,19 @@
 
 A warehouse management system (WMS) is a tool that helps control and organize everything that goes on in the warehouse. It helps keep track of products and manage their storage. The system includes managing inventory, organizing the storage space, and coordinating the logistics of sending and receiving goods.
 
-![WMS](./WMS.png)
+![WMS](./wms-real.png)
 
+![WMS](./high-level.png)
 
 ## Features - Product endpoint
+
 - Creating products
 - Retrieving products
 - Searching for products
 - Picking products
 
-
 ## Unpick specification
+
 1. Add an unpick HTTP method `POST products/{id}/unpick`
 2. Successfull unpick operation returns 204 No Content
 3. When a product unpicked, the latest pick state is changed to Unpicked
@@ -22,16 +24,19 @@ A warehouse management system (WMS) is a tool that helps control and organize ev
 5. Return BadRequest when stock level becomes than bigger MaxStock Level (50)
 6. BadRequest should have error "Cannot unpick more because reached max stock inventory limit"
 
-
 ## Run stryker
+
 1. Go to test folder "MutationTestingMeetup.Tests"
 2. Open PowerShell
 3. Run
-```dotnet stryker```
+   `dotnet stryker`
 
 # Archive
+
 "Picking" in a warehouse refers to the process of selecting and gathering items from storage locations according to specific customer orders. I
+
 ## Event
+
 -- agenda
 -- mutation testing
 --- talk about bread
@@ -40,17 +45,19 @@ A warehouse management system (WMS) is a tool that helps control and organize ev
 -- demo TDD
 
 ## DEMO MT
+
 -Talk about Project
+
 - Talk about ProductController and Product about the domain
 - TODO: MAKE IMAGE?
 - Check code coverage?
--Talk about Stryker
--- Show link https://stryker-mutator.io/
--- shot config file
--- let's run it
-
+  -Talk about Stryker
+  -- Show link https://stryker-mutator.io/
+  -- shot config file
+  -- let's run it
 
 ## Mutations
+
 - "The product category must be specified" missiing - HasTextInBody
 - ProductPicked edge case - add new test
 - Again the exception message is not passed
