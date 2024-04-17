@@ -122,7 +122,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             //Assert
             await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.Created);
 
-            scope.WebShopDbContext.Products.Should().SatisfyRespectively(
+            scope.WarehouseDbContext.Products.Should().SatisfyRespectively(
                 p =>
                 {
                     p.Name.Should().Be("DEWALT Screwdriver Bit Set");
@@ -131,8 +131,8 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
                     p.SaleState.Should().Be(SaleState.NoSale);
                 });
 
-            var product = scope.WebShopDbContext.Products.Single();
-            var stockLevel = scope.WebShopDbContext.StockLevels.Single();
+            var product = scope.WarehouseDbContext.Products.Single();
+            var stockLevel = scope.WarehouseDbContext.StockLevels.Single();
             stockLevel.Should().NotBeNull();
             stockLevel.ProductId.Should().Be(product.Id);
             stockLevel.Count.Should().Be(10);
@@ -178,7 +178,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
 
             //Assert
             await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.NoContent);
-            var stockLevel = scope.WebShopDbContext.StockLevels.Single();
+            var stockLevel = scope.WarehouseDbContext.StockLevels.Single();
             stockLevel.Count.Should().Be(8);
         }
 

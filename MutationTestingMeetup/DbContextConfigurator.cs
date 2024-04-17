@@ -10,7 +10,7 @@ namespace MutationTestingMeetup
     {
         public static void ConfigureDbContextUsingInMemorySQLite(this IServiceCollection services)
         {
-            services.AddDbContext<WebShopDbContext>(options =>
+            services.AddDbContext<WarehouseDbContext>(options =>
                 {
                     var connectionString = $"datasource=inmemorydb{Guid.NewGuid()};mode=memory;";
                     var connection = new SqliteConnection(connectionString);

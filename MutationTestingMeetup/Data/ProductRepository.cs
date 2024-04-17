@@ -9,10 +9,10 @@ namespace MutationTestingMeetup.Data
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly WebShopDbContext _dbContext;
+        private readonly WarehouseDbContext _dbContext;
         private readonly DbSet<Product> _entities;
 
-        public ProductRepository(WebShopDbContext dbContext)
+        public ProductRepository(WarehouseDbContext dbContext)
         {
             if (dbContext == null) throw new ArgumentNullException(nameof(dbContext));
 

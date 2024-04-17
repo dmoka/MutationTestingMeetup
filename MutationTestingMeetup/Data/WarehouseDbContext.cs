@@ -6,7 +6,7 @@ using MutationTestingMeetup.Domain;
 
 namespace MutationTestingMeetup.Data
 {
-    public class WebShopDbContext : DbContext
+    public class WarehouseDbContext : DbContext
     {
         private readonly IDomainEventDispatcher _dispatcher;
 
@@ -17,7 +17,7 @@ namespace MutationTestingMeetup.Data
 
 
 
-        public WebShopDbContext(DbContextOptions<WebShopDbContext> options, IDomainEventDispatcher dispatcher) : base(options)
+        public WarehouseDbContext(DbContextOptions<WarehouseDbContext> options, IDomainEventDispatcher dispatcher) : base(options)
         {
             Database.EnsureCreated();
             _dispatcher = dispatcher;
@@ -25,7 +25,7 @@ namespace MutationTestingMeetup.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(WebShopDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(WarehouseDbContext).Assembly);
 
             base.OnModelCreating(modelBuilder);
         }

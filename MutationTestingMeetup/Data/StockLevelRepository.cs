@@ -9,10 +9,10 @@ namespace MutationTestingMeetup.Data
 {
     public class StockLevelRepository : IStockLevelRepository
     {
-        private readonly WebShopDbContext _dbContext;
+        private readonly WarehouseDbContext _dbContext;
         private readonly DbSet<StockLevel> _entities;
 
-        public StockLevelRepository(WebShopDbContext dbContext)
+        public StockLevelRepository(WarehouseDbContext dbContext)
         {
             if (dbContext == null) throw new ArgumentNullException(nameof(dbContext));
 

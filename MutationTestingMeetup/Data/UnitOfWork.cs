@@ -5,11 +5,11 @@ namespace MutationTestingMeetup.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly WebShopDbContext _dbContext;
+        private readonly WarehouseDbContext _dbContext;
         private IProductRepository _products;
         private IStockLevelRepository _stocks;
 
-        public UnitOfWork(WebShopDbContext dbContext)
+        public UnitOfWork(WarehouseDbContext dbContext)
         {
             _dbContext = dbContext;
         }

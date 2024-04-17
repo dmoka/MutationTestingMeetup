@@ -15,7 +15,7 @@ namespace MutationTestingMeetup.Tests
     {
         public HttpClient Client { get; }
 
-        public WebShopDbContext WebShopDbContext { get; }
+        public WarehouseDbContext WarehouseDbContext { get; }
 
         private TestServer TestServer { get; }
 
@@ -23,7 +23,7 @@ namespace MutationTestingMeetup.Tests
         {
             TestServer = new TestServer(CreateWebHostBuilder());
 ;           Client = TestServer.CreateClient();
-            WebShopDbContext = TestServer.Host.Services.GetService<WebShopDbContext>();
+            WarehouseDbContext = TestServer.Host.Services.GetService<WarehouseDbContext>();
         }
 
         public T GetService<T>()
@@ -35,16 +35,16 @@ namespace MutationTestingMeetup.Tests
         {
             foreach (var product in products)
             {
-                WebShopDbContext.Add(product);
+                WarehouseDbContext.Add(product);
             }
-            await WebShopDbContext.SaveChangesAsync();
+            await WarehouseDbContext.SaveChangesAsync();
         }
 
         public async Task AddStockLevel(StockLevel stockLevel)
         {
-            WebShopDbContext.Add(stockLevel);
+            WarehouseDbContext.Add(stockLevel);
 
-            await WebShopDbContext.SaveChangesAsync();
+            await WarehouseDbContext.SaveChangesAsync();
         }
 
         private static IWebHostBuilder CreateWebHostBuilder()
