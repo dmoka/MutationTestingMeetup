@@ -112,7 +112,7 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
                 name = "DEWALT Screwdriver Bit Set",
                 category = ProductCategory.Tool,
                 price = 700,
-                saleState = SaleState.NoSale
+                isOnSale = false
             };
 
             //Act
@@ -128,6 +128,42 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
                     p.Category.Should().Be(ProductCategory.Tool);
                     p.Price.Should().Be(700);
                     p.SaleState.Should().Be(SaleState.NoSale);
+                });
+
+            var product = scope.WarehouseDbContext.Products.Single();
+            var stockLevel = scope.WarehouseDbContext.StockLevels.Single();
+            stockLevel.Should().NotBeNull();
+            stockLevel.ProductId.Should().Be(product.Id);
+            stockLevel.Count.Should().Be(10);
+        }
+
+        [Test]
+        public async Task OnSaleProductShouldBeCreated()
+        {
+            //Arrange
+            using var scope = new InMemoryTestServerScope();
+
+            var newProduct = new
+            {
+                name = "DEWALT Screwdriver Bit Set",
+                category = ProductCategory.Tool,
+                price = 700,
+                isOnSale = true
+            };
+
+            //Act
+            var response = await scope.Client.PostAsync("/products", JsonPayloadBuilder.Build(newProduct));
+
+            //Assert
+            await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.Created);
+
+            scope.WarehouseDbContext.Products.Should().SatisfyRespectively(
+                p =>
+                {
+                    p.Name.Should().Be("DEWALT Screwdriver Bit Set");
+                    p.Category.Should().Be(ProductCategory.Tool);
+                    p.Price.Should().Be(700);
+                    p.SaleState.Should().Be(SaleState.OnSale);
                 });
 
             var product = scope.WarehouseDbContext.Products.Single();
