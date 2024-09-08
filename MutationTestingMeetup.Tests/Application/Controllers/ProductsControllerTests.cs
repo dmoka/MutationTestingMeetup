@@ -56,6 +56,8 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             var response = await scope.Client.GetAsync("/products");
 
             await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.BadRequest);
+            await HttpResponseMessageAsserter.AssertThat(response)
+                .HasTextInBody("The product category must be specified");
         }
 
         [Test]
@@ -88,6 +90,52 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.OK);
             await HttpResponseMessageAsserter.AssertThat(response).HasJsonArrayInBody(new[]
             {
+                new
+                {
+                    id = product.Id,
+                    name = "Logitech HD Pro Webcam",
+                    category = ProductCategory.Electronic,
+                    price = 300,
+                    saleState = SaleState.OnSale,
+                    lastPickState = (int)PickState.New,
+                    domainEvents = Array.Empty<object>()
+                }
+            });
+        }
+
+        [Test]
+        public async Task GetAllShouldReturnMultipleProducts_whenMultipleFoundWithFilters()
+        {
+            //Arrange
+            using var scope = new InMemoryTestServerScope();
+
+            var product = new Product("Logitech HD Pro Webcam", ProductCategory.Electronic, 300, SaleState.OnSale);
+            await scope.AddProductsToDbContext(product);
+
+            var product2 = new Product("Acer Webcam", ProductCategory.Electronic, 400, SaleState.OnSale);
+            await scope.AddProductsToDbContext(product2);
+
+            var product3 = new Product("Acer Webcam v2", ProductCategory.Electronic, 300, SaleState.NoSale);
+            await scope.AddProductsToDbContext(product3);
+
+            //Act
+            var response = await scope.Client.GetAsync("/products?category=Electronic&maxPrice=400&isOnSale=true");
+
+            //Assert
+            await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.OK);
+            await HttpResponseMessageAsserter.AssertThat(response).HasJsonArrayInBody(new[]
+            {
+                new
+                {
+                    id = product2.Id,
+                    name = "Acer Webcam",
+                    category = ProductCategory.Electronic,
+                    price = 400,
+                    saleState = SaleState.OnSale,
+                    lastPickState = (int)PickState.New,
+                    domainEvents = Array.Empty<object>()
+                },
+
                 new
                 {
                     id = product.Id,
@@ -164,8 +212,9 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.Conflict);
         }
 
-        [Test]
-        public async Task PickProductShouldDecreaseStockLevel()
+        [TestCase(2,8)]
+        [TestCase(10,0)]
+        public async Task PickProductShouldDecreaseStockLevel(int pickCount, int expectedStockLevel)
         {
             //Arrange
             using var scope = new InMemoryTestServerScope();
@@ -174,12 +223,12 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
             await scope.AddProductsToDbContext(product);
 
             //Act
-            var response = await scope.Client.PostAsync($"/products/{product.Id}/pick", JsonPayloadBuilder.Build(new PickPayload {Count = 2}));
+            var response = await scope.Client.PostAsync($"/products/{product.Id}/pick", JsonPayloadBuilder.Build(new PickPayload {Count = pickCount }));
 
             //Assert
             await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.NoContent);
             var stockLevel = scope.WarehouseDbContext.StockLevels.Single();
-            stockLevel.Count.Should().Be(8);
+            stockLevel.Count.Should().Be(expectedStockLevel);
         }
 
         [Test]
@@ -196,6 +245,9 @@ namespace MutationTestingMeetup.Tests.Application.Controllers
 
             //Assert
             await HttpResponseMessageAsserter.AssertThat(response).HasStatusCode(HttpStatusCode.BadRequest);
+            await HttpResponseMessageAsserter.AssertThat(response)
+                .HasTextInBody("Cannot be picked more than stock level");
         }
+
     }
 }
