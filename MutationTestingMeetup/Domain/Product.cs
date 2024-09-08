@@ -36,7 +36,6 @@ namespace MutationTestingMeetup.Domain
     {
         New,
         Picked,
-        Unpicked
     }
 
     public enum SaleState
