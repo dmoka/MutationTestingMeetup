@@ -5,8 +5,8 @@
             "progress",
             "html"
         ],
-        "solution": "C:/dev/MutationTestingMeetup/MutationTestingMeetup.sln",
-		"project" : "C:/dev/MutationTestingMeetup/MutationTestingMeetup/MutationTestingMeetup.csproj",
+        "solution": "/Users/dmoka/dev/MutationTestingMeetup/MutationTestingMeetup.sln",
+		"project" : "/Users/dmoka/dev/MutationTestingMeetup/MutationTestingMeetup.csproj",
         "mutate": [
             "!Startup.cs",
             "!DbContextConfigurator.cs",

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace MutationTestingMeetup.Tests.Asserters
 {
@@ -25,7 +25,7 @@ namespace MutationTestingMeetup.Tests.Asserters
             IList<TEntity> actualList = actualEntities.ToList();
             var numberOfActualOrders = expectedEntriesAsserters.Length;
 
-            Assert.True(
+            ClassicAssert.True(
                 actualList.Count == numberOfActualOrders,
                 string.Format(
                     $"Lists (containing {typeof(TEntity).Name}s) have different sizes. Expected list size: {0}, actual list size: {1}",
